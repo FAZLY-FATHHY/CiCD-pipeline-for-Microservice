@@ -5,9 +5,13 @@ pipeline {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker build -t fazlyfathhy/checkoutservice:latest ."
+                    // Ensure Docker login using credentials
+                    withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        // Log in to Docker Hub securely using stdin
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
+                    // Build the Docker image and tag it
+                    sh "docker build -t fazlyfathhy/emailservice:latest ."
                 }
             }
         }
@@ -15,9 +19,13 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push fazlyfathhy/checkoutservice:latest "
+                    // Ensure Docker login before pushing the image
+                    withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                        // Log in to Docker Hub again before pushing
+                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
+                    // Push the image to Docker Hub
+                    sh "docker push fazlyfathhy/emailservice:latest"
                 }
             }
         }
