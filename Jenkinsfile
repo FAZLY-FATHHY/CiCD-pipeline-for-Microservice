@@ -5,9 +5,7 @@ pipeline {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
-                    // Login to Docker Hub using the credentials ID 'docker-cred'
-                    withDockerRegistry(credentialsId: 'docker-cred', url: 'https://index.docker.io') {
-                        // Build the Docker image and tag it
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                         sh "docker build -t fazlyfathhy/emailservice:latest ."
                     }
                 }
@@ -17,9 +15,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Login to Docker Hub again and push the image
-                    withDockerRegistry(credentialsId: 'docker-cred', url: 'https://index.docker.io') {
-                        sh "docker push fazlyfathhy/emailservice:latest"
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker push fazlyfathhy/emailservice:latest "
                     }
                 }
             }
