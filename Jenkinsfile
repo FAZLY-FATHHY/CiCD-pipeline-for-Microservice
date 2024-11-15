@@ -11,7 +11,7 @@ pipeline {
                         sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
                     // Build the Docker image and tag it
-                    sh "docker build -t fazlyfathhy/emailservice:latest ."
+                    sh "docker build -t fazlyfathhy/checkoutservice ."
                 }
             }
         }
@@ -25,7 +25,7 @@ pipeline {
                         sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
                     }
                     // Push the image to Docker Hub
-                    sh "docker push fazlyfathhy/emailservice:latest"
+                    sh "docker push fazlyfathhy/checkoutservice"
                 }
             }
         }
