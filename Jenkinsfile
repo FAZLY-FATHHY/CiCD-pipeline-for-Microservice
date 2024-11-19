@@ -7,7 +7,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                         // Build and tag the Docker image
-                        sh "docker build -t fazlyfathhy/emailservice:latest ."
+                        sh "docker build -t fazlyfathhy/checkoutservice"
                     }
                 }
             }
@@ -18,7 +18,7 @@ pipeline {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
                         // Push the Docker image to the registry
-                        sh "docker push fazlyfathhy/emailservice:latest"
+                        sh "docker push fazlyfathhy/checkoutservice"
                     }
                 }
             }
