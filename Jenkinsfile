@@ -5,13 +5,9 @@ pipeline {
         stage('Build & Tag Docker Image') {
             steps {
                 script {
-                    // Ensure Docker login using credentials
-                    withCredentials([usernamePassword(credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                        // Log in to Docker Hub securely using stdin
-                        sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                    withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
+                        sh "docker build -t fazlyfathhy/checkoutservice."
                     }
-                    // Build the Docker image and tag it
-                    sh "docker build -t fazlyfathhy/checkoutservice ."
                 }
             }
         }
