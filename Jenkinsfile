@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'fcc64174-5d6c-4fa4-a380-cdb847847370', toolName: 'docker') {
-                        sh "docker build -t fazlyfathhy/shippingservice:latest ."
+                        sh "docker build -t fazlyfathhy/shippingservice:v1 ."
                     }
                 }
             }
@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'fcc64174-5d6c-4fa4-a380-cdb847847370', toolName: 'docker') {
-                        sh "docker push fazlyfathhy/shippingservice:latest "
+                        sh "docker push fazlyfathhy/shippingservice:v1 . "
                     }
                 }
             }
