@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build & Tag Docker Image') {
             steps {
-                timeout(time: 30, unit: 'MINUTES') { // Timeout to prevent hanging
+                timeout(time: 120, unit: 'MINUTES') { // Timeout to prevent hanging
                     retry(2) { // Retry in case of transient failures
                         script {
                             withDockerRegistry(credentialsId: 'fcc64174-5d6c-4fa4-a380-cdb847847370', toolName: 'docker') {
